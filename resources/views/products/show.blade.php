@@ -53,5 +53,11 @@ btn-primary btn-sm">&larr; Back</a>
  </div>
  </div> 
 </div>
+
+<br>
+<form method="POST" action="{{ url('/logout') }}">
+    @csrf
+    <button type="submit" class=" btn btn-primary btn-sm">Logout</button>
+</form>
  
 @endsection
