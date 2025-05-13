@@ -1,50 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Register</h1>
+<body class="bg-light">
 
-    <!-- Display success message if registration was successful -->
-    @if(session('success'))
-        <p style="color: green;">{{ session('success') }}</p>
-    @endif
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4>Register</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="/register">
+                        @csrf
 
-    <!-- Display validation errors -->
-    @if($errors->any())
-        <ul style="color: red;">
-            @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    @endif
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" name="name" class="form-control" value="{{ old('name') }}" required autofocus>
+                        </div>
 
-    <!-- Registration Form -->
-    <form method="POST" action="/register">
-        @csrf
-        
-        <!-- Name Input -->
-        <label for="name">Name:</label><br>
-        <input type="text" name="name" value="{{ old('name') }}" required><br><br>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email address</label>
+                            <input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
+                        </div>
 
-        <!-- Email Input -->
-        <label for="email">Email:</label><br>
-        <input type="email" name="email" value="{{ old('email') }}" required><br><br>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" name="password" class="form-control" required>
+                        </div>
 
-        <!-- Password Input -->
-        <label for="password">Password:</label><br>
-        <input type="password" name="password" required><br><br>
+                        <div class="mb-3">
+                            <label for="password_confirmation" class="form-label">Confirm Password</label>
+                            <input type="password" name="password_confirmation" class="form-control" required>
+                        </div>
 
-        <!-- Confirm Password Input -->
-        <label for="password_confirmation">Confirm Password:</label><br>
-        <input type="password" name="password_confirmation" required><br><br>
+                        <button type="submit" class="btn btn-primary w-100">Register</button>
+                    </form>
 
-        <button type="submit">Register</button>
-    </form>
+                    <div class="text-center mt-3">
+                        <p>Already have an account? <a href="/login">Login here</a></p>
+                    </div>
 
-    <p>Already have an account? <a href="/login">Login here</a></p>
+                    @if(session('success'))
+                        <div class="alert alert-success mt-3">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    @if($errors->any())
+                        <div class="alert alert-danger mt-3">
+                            <ul class="mb-0">
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS (optional) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

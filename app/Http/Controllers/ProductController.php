@@ -7,18 +7,22 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index() : View
     {
-        return view('products.index', [
-            'products' => Product::latest()->paginate(4)
-        ]);
-           
+        $products = Auth::user()->products()->latest()->paginate(4);
+        return view('products.index', compact('products'));
     }
 
     /**
@@ -34,11 +38,12 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request) : RedirectResponse
     {
-        Product::create($request->validated());
+        $product = new Product($request->validated());
+        $product->user_id = Auth::id();
+        $product->save();
 
         return redirect()->route('products.index')
             ->withSuccess('New product is added successfully.');
-       
     }
 
     /**
@@ -46,6 +51,7 @@ class ProductController extends Controller
      */
     public function show(Product $product) : View
     {
+        $this->authorize('view', $product);
         return view('products.show', compact('product'));
     }
 
@@ -54,6 +60,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product): View
     {
+        $this->authorize('update', $product);
         return view('products.edit', compact('product'));
     }
 
@@ -62,10 +69,10 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product) : RedirectResponse
     {
+        $this->authorize('update', $product);
         $product->update($request->validated());
-            return redirect()->back()
-                ->withSuccess('Product is updated successfully.');
-
+        return redirect()->back()
+            ->withSuccess('Product is updated successfully.');
     }
 
     /**
@@ -73,6 +80,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product) : RedirectResponse
     {
+        $this->authorize('delete', $product);
         $product->delete();
 
         return redirect()->route('products.index')
