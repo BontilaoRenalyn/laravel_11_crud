@@ -63,11 +63,6 @@ product?');"><i class="bi bi-trash"></i> Delete</button>
  </div> 
 </div>
 
-<br>
-<form method="POST" action="{{ url('/logout') }}">
-    @csrf
-    <button type="submit" class=" btn btn-primary btn-sm">Logout</button>
-</form>
 
 
  

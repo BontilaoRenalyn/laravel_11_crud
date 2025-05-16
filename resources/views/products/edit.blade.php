@@ -90,10 +90,5 @@ name="description">{{ $product->description }}</textarea>
  </div> 
 </div>
 
-<br>
-<form method="POST" action="{{ url('/logout') }}">
-    @csrf
-    <button type="submit" class=" btn btn-primary btn-sm">Logout</button>
-</form>
  
 @endsection

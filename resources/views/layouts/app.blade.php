@@ -18,6 +18,13 @@ Tutorial</h3>
  @yield('content')
  <div class="row justify-content-center text-center mt-3">
  <div class="col-md-12">
+
+ <form method="POST" action="{{ url('/logout') }}">
+    @csrf
+    <button type="submit" class=" btn btn-primary btn-sm">Logout</button>
+</form>
+
+<br>
 <p>
 Return to Website: <a
 href="https://www.usjr.edu.ph/"><strong>University of San Jose -
