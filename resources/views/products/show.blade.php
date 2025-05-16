@@ -13,6 +13,13 @@ btn-primary btn-sm">&larr; Back</a>
  </div>
  </div>
  <div class="card-body">
+ @if($product->image)
+ <div class="row mb-4">
+ <div class="col-md-6 offset-md-4">
+ <img src="{{ asset('storage/' . $product->image) }}" alt="Product Image" class="img-fluid rounded" style="max-width: 300px;">
+ </div>
+ </div>
+ @endif
  <div class="row">
  <label for="code" class="col-md-4 col-form-label text-md-end text-start"><strong>Code:</strong></label>
  <div class="col-md-6" style="line-height:

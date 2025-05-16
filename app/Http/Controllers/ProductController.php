@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateProductRequest;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -38,7 +39,14 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request) : RedirectResponse
     {
-        $product = new Product($request->validated());
+        $data = $request->validated();
+        
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('products', 'public');
+            $data['image'] = $imagePath;
+        }
+
+        $product = new Product($data);
         $product->user_id = Auth::id();
         $product->save();
 
@@ -70,7 +78,19 @@ class ProductController extends Controller
     public function update(UpdateProductRequest $request, Product $product) : RedirectResponse
     {
         $this->authorize('update', $product);
-        $product->update($request->validated());
+        
+        $data = $request->validated();
+
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($product->image) {
+                Storage::disk('public')->delete($product->image);
+            }
+            $imagePath = $request->file('image')->store('products', 'public');
+            $data['image'] = $imagePath;
+        }
+
+        $product->update($data);
         return redirect()->back()
             ->withSuccess('Product is updated successfully.');
     }
@@ -81,6 +101,12 @@ class ProductController extends Controller
     public function destroy(Product $product) : RedirectResponse
     {
         $this->authorize('delete', $product);
+        
+        // Delete image if exists
+        if ($product->image) {
+            Storage::disk('public')->delete($product->image);
+        }
+        
         $product->delete();
 
         return redirect()->route('products.index')

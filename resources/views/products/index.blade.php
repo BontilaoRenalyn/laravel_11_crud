@@ -31,6 +31,7 @@
                     <thead>
                         <tr>
                             <th scope="col">S#</th>
+                            <th scope="col">Image</th>
                             <th scope="col">Code</th>
                             <th scope="col">Name</th>
                             <th scope="col">Quantity</th>
@@ -42,6 +43,19 @@
                         @forelse ($products as $product)
                         <tr>
                             <th scope="row">{{ $loop->iteration }}</th>
+                            <td>
+                                @if($product->image)
+                                    <div style="width: 100px; height: 100px; overflow: hidden; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa; border-radius: 4px;">
+                                        <img src="{{ asset('storage/' . $product->image) }}" 
+                                             alt="Product Image" 
+                                             style="width: 100%; height: 100%; object-fit: cover;">
+                                    </div>
+                                @else
+                                    <div style="width: 100px; height: 100px; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa; border-radius: 4px;">
+                                        <span class="text-muted">No image</span>
+                                    </div>
+                                @endif
+                            </td>
                             <td>{{ $product->code }}</td>
                             <td>{{ $product->name }}</td>
                             <td>{{ $product->quantity }}</td>
@@ -63,7 +77,7 @@
                             </td>
                         </tr>
                         @empty
-                        <td colspan="6">
+                        <td colspan="7">
                             <span class="text-danger">
                                 <strong>No Product Found!</strong>
                             </span>
