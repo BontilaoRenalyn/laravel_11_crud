@@ -14,14 +14,14 @@ btn-primary btn-sm">&larr; Back</a>
  </div>
  <div class="card-body">
  <form action="{{ route('products.store') }}"
-method="post">
+method="post" enctype="multipart/form-data">
  @csrf
  <div class="mb-3 row">
  <label for="code" class="col-md-4 col-form-label text-md-end text-start">Code</label>
  <div class="col-md-6">
  <input type="text" class="form-control 
 @error('code') is-invalid @enderror" id="code" name="code" value="{{ 
-old('code') }}">
+old('code') }}" required>
  @error('code')
  <span class="text-danger">{{ $message 
 }}</span>
@@ -33,7 +33,7 @@ old('code') }}">
  <div class="col-md-6">
  <input type="text" class="form-control 
 @error('name') is-invalid @enderror" id="name" name="name" value="{{ 
-old('name') }}">
+old('name') }}" required>
  @error('name')
  <span class="text-danger">{{ $message 
 }}</span>
@@ -45,7 +45,7 @@ old('name') }}">
  <div class="col-md-6">
  <input type="number" class="form-control 
 @error('quantity') is-invalid @enderror" id="quantity" name="quantity"
-value="{{ old('quantity') }}">
+value="{{ old('quantity') }}" required min="1">
  @error('quantity')
  <span class="text-danger">{{ $message 
 }}</span>
@@ -57,7 +57,7 @@ value="{{ old('quantity') }}">
  <div class="col-md-6">
  <input type="number" step="0.01"
 class="form-control @error('price') is-invalid @enderror" id="price"
-name="price" value="{{ old('price') }}">
+name="price" value="{{ old('price') }}" required>
  @error('price')
  <span class="text-danger">{{ $message 
 }}</span>
@@ -69,14 +69,23 @@ name="price" value="{{ old('price') }}">
  <div class="col-md-6">
  <textarea class="form-control 
 @error('description') is-invalid @enderror" id="description"
-name="description">{{ old('description') }}</textarea>
+name="description" required>{{ old('description') }}</textarea>
  @error('description')
  <span class="text-danger">{{ $message 
 }}</span>
  @enderror
  </div>
  </div>
-<div class="mb-3 row">
+ <div class="mb-3 row">
+ <label for="image" class="col-md-4 col-form-label text-md-end text-start">Product Image</label>
+ <div class="col-md-6">
+ <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image">
+ @error('image')
+ <span class="text-danger">{{ $message }}</span>
+ @enderror
+ </div>
+ </div>
+ <div class="mb-3 row">
  <input type="submit" class="col-md-3 offset-md-5 btn btn-primary" value="Add Product">
  </div>
  </form>
@@ -84,6 +93,5 @@ name="description">{{ old('description') }}</textarea>
  </div>
  </div> 
 </div>
-
  
 @endsection
