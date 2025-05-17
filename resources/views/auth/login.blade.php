@@ -13,7 +13,7 @@
 
             <div class="card shadow">
                 <div class="card-header bg-primary text-white text-center">
-                    <h4>Login</h4>
+                    <h4>User Login</h4>
                 </div>
                 <div class="card-body">
                     <form method="POST" action="/login">

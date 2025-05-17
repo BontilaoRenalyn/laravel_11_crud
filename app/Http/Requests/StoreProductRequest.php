@@ -24,9 +24,10 @@ class StoreProductRequest extends FormRequest
         return [
             'code' => 'required|string|max:50|unique:products,code',
             'name' => 'required|string|max:250',
-            'quantity' => 'required|integer|min:1|max:10000',
-            'price' => 'required',
-            'description' => 'nullable|string'
+            'quantity' => 'required|integer|min:1',
+            'description' => 'required|string',
+            'price' => 'required|numeric|min:0',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ];
     }
 }

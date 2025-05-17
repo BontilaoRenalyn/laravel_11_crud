@@ -15,6 +15,7 @@ href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.c
  <div class="container">
  <h3 class=" mt-3">Simple Laravel 11 CRUD Application 
 Tutorial</h3>
+
  @yield('content')
  <div class="row justify-content-center text-center mt-3">
  <div class="col-md-12">
@@ -26,6 +27,14 @@ Tutorial</h3>
 
 <br>
 <p>
+
+<form method="POST" action="{{ url('/logout') }}">
+    @csrf
+    <button type="submit" class=" btn btn-primary btn-sm">Logout</button>
+</form>
+
+<br>
+
 Return to Website: <a
 href="https://www.usjr.edu.ph/"><strong>University of San Jose -
 Recoletos</strong></a>
