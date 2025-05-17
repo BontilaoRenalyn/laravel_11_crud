@@ -20,11 +20,6 @@ Tutorial</h3>
  <div class="row justify-content-center text-center mt-3">
  <div class="col-md-12">
 
- <form method="POST" action="{{ url('/logout') }}">
-    @csrf
-    <button type="submit" class=" btn btn-primary btn-sm">Logout</button>
-</form>
-
 <br>
 <p>
 
